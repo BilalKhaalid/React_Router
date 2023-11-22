@@ -11,11 +11,15 @@ import NewProducts from "./components/NewProducts";
 import User from "./components/User";
 import UserDetails from "./components/UserDetails";
 import Admin from "./components/Admin";
+import Profile from "./components/Profile";
+import { AuthProvider } from "./components/utils/auth";
+import Login from "./components/Login";
 
 const LazyAbout = lazy(() => import("./components/About"));
+import RequiredAuth from "./components/RequireAuth";
 const App = () => {
   return (
-    <>
+    <AuthProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -37,8 +41,17 @@ const App = () => {
         <Route path="users" element={<User />} />
         <Route path="users/:userId" element={<UserDetails />} />
         <Route path="users/admin" element={<Admin />} />
+        <Route
+          path="profile"
+          element={
+            <RequiredAuth>
+              <Profile />
+            </RequiredAuth>
+          }
+        />
+        <Route path="login" element={<Login />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 };
 
